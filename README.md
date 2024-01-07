@@ -1,5 +1,7 @@
 # VoiceMeeter Crackling Repair
 
+<img src="https://github.com/TheRake66/VoiceMeeter-Crackling-Repair/blob/main/logo.png">
+
 Fix crackling noises from audio outputs of VoiceMeeter, VoiceMeeter Bannana and VoiceMeeter Potato.
 
 ## How to use ?
