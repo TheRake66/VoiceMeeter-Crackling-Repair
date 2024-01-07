@@ -4,7 +4,7 @@ Fix crackling noises from audio outputs of VoiceMeeter, VoiceMeeter Bannana and 
 
 ## How to use ?
 
-Download this program from the "Release" menu on the right of the page or by clicking on this <a href="https://github.com/TheRake66/VoiceMeeter-Crackling-Repair/releases/">link</a>.
+Download this program from the "Releases" menu on the right of the page or by clicking on this <a href="https://github.com/TheRake66/VoiceMeeter-Crackling-Repair/releases/">link</a>.
 
 This program is used to automatically change the priority of the "audiodg" processes from normal to high and to define the affinity of the processes on the last core of the processor.
 
