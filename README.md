@@ -16,6 +16,10 @@ You can also place this program in the Windows startup folder so that it happens
 
 <img src="https://github.com/TheRake66/VoiceMeeter-Crackling-Repair/blob/main/screenshot.png">
 
+Now the program registers itself in the registry so it can launch when the computer starts.
+
+<img src="https://github.com/TheRake66/VoiceMeeter-Crackling-Repair/blob/main/screenshot 2.png">
+
 ## More informations
 
 This program was written in C#. A PowerShell script can be used but requires activating developer mode on the machine and administrator mode in the file properties.
