@@ -6,60 +6,54 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.Threading;
 
 namespace VoiceMeeter_Crackling_Repair
 {
     internal class Program
     {
+        /// <summary>
+        /// Main function of the program.
+        /// </summary>
+        /// <param name="args">The command arguments sent to the program.</param>
         static void Main(string[] args)
         {
             try
             {
-                // To launch the program when the computer starts.
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
+                if (System.IsAdminMode())
                 {
-                    Assembly app = Assembly.GetExecutingAssembly();
-                    key.SetValue(app.GetName().Name, app.Location);
+                    System.EnableAutoStart();
+                    Console.WriteLine("Launching the program at computer startup has been enabled.");
+
+                    Console.WriteLine(Audio.FixAudioCrackling() ?
+                        "Audio crackling correction is complete." :
+                        "Fixing audio crackles failed.");
                 }
-                Console.WriteLine("Launching the program when the computer starts.");
-
-                // Get the list of audio processes.
-                string name = "audiodg";
-                Process[] processes = Process.GetProcessesByName(name);
-                if (processes.Length > 0)
+                else if (System.IsVistaOrHigher())
                 {
-                    // Create a bitmask with the number of cores.
-                    IntPtr mask = new IntPtr(1 << (Environment.ProcessorCount - 1));
-
-                    // Define the priority and affinity of each process.
-                    foreach (Process audio in processes)
-                    {
-                        audio.ProcessorAffinity = mask;
-                        audio.PriorityBoostEnabled = true;
-                        audio.PriorityClass = ProcessPriorityClass.High;
-                    }
-
-                    // The program has finished its work.
-                    Console.WriteLine("Fixed audio crackles.");
+                    Console.WriteLine("Restarting the program in administrator mode...");
+                    System.RestartInAdminMode();
+                    Console.WriteLine("Authorization denied by user.");
                 }
                 else
-                {
-                    // If there is no audio process.
-                    Console.WriteLine($"No \"{name}\" processes found.");
-                }
+                    Console.WriteLine("The program must be run in administrator mode.");
             }
             catch (Exception ex)
             {
-                // In case of a program error.
                 Console.WriteLine($"An error has occurred!{Environment.NewLine}{ex}");
             }
             finally
             {
-                // Pause before closing the program.
-                Console.WriteLine("Press any key to exit.");
-                Console.ReadKey();
+                for (int i = 5; i > 0; i--)
+                {
+                    Console.WriteLine($"The program is finished, it will close in {i} seconds...");
+                    Thread.Sleep(1000);
+                }
+                Environment.Exit(0);
             }
         }
     }
